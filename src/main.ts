@@ -1,6 +1,6 @@
 
-import  Product  from "./models/Product.ts";
-import { calculateDiscount } from "./utils/discountCalculator.ts";
+import { Product } from "./models/Product";
+import { calculateDiscount } from "./utils/discountCalculator";
 
 async function fetchProducts(): Promise<Product[]> {
   const response = await fetch("https://dummyjson.com/products");
@@ -27,6 +27,8 @@ async function fetchProducts(): Promise<Product[]> {
 fetchProducts()
   .then((products) => {
     console.log("First Product:", products[0]);
+    products[0].displayDetails();
+    console.log(`Discounted Price: $${products[0].getPriceWithDiscount().toFixed(2)}`);
   })
   .catch((error) => {
     console.error("Error:", error);
@@ -39,13 +41,17 @@ const mascara = new Product(
   "Essence Mascara Lash Princess",
   "Popular mascara known for volumizing and lengthening effects.",
   "beauty",
-  9.99
+  9.99,
+  7.17
 );
 
 // Display all details
 mascara.displayDetails();
 
 // Apply discount
+
+const discountAmount = calculateDiscount(mascara.price, mascara.discountPercentage);
+console.log(` Discount amount: $${discountAmount.toFixed(2)}`);
 
 //const discountedPrice = mascara.getPriceWithDiscount(7.17);
 //console.log("Final Price:", discountedPrice); 

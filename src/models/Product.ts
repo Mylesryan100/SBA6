@@ -1,5 +1,5 @@
 
-export interface Product {
+export class Product {
   id: number;                 
   title: string;              
   description: string;        
@@ -40,7 +40,10 @@ export interface Product {
     );
     return discountedPrice;
   }
-}
-getPriceWithTax(taxRate:number): number {
-    return (this.price * (taxRate + 1));
+
+ getPriceWithTax(taxRate: number): number {
+    const taxedPrice = this.price * (1 + taxRate);
+    console.log(` Price after ${taxRate * 100}% tax: $${taxedPrice.toFixed(2)}`);
+    return taxedPrice;
+  }
 }
