@@ -4,7 +4,6 @@ import { calculateDiscount } from "./utils/discountCalculator";
 
 async function fetchProducts(): Promise<Product[]> {
   const response = await fetch("https://dummyjson.com/products");
-  
   if (!response.ok) {
     throw new Error(`Failed to fetch products: ${response.status}`);
   }
@@ -12,13 +11,17 @@ async function fetchProducts(): Promise<Product[]> {
   const data = await response.json();
   
   // The API returns { products: [...] }, so we only return the array
-  const products: Product[] = data.products.map((p: any) => ({
-    id: p.id,
-    title: p.title,
-    description: p.description,
-    category: p.category,
-    price: p.price
-  }));
+  const products: Product[] = data.products.map(
+    ((p: any) => 
+      new Product(
+     p.id,
+     p.title,
+     p.description,
+     p.category,
+     p.price,
+     p.discountPercentage
+   ) 
+  ));
 
   console.log("Products fetched:", products);
   return products;
