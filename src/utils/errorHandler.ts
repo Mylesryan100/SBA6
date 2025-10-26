@@ -36,3 +36,16 @@ export function handleApiError(statusCode: number, message: string): void {
   }
 }
 
+// This section handles the unexpected errors that may pop up due to some logic issues or even coding mistakes
+export function handleUnexpectedError(error: unknown): void {
+  if (error instanceof AppError) {
+    console.error(` AppError: ${error.message}`);
+  } else if (error instanceof Error) {
+    console.error(` Unexpected Error: ${error.message}`);
+  } else {
+    console.error(" Unknown error:", error);
+  }
+
+  alert("Something went wrong. Please try again.");
+}
+

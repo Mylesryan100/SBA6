@@ -1,6 +1,8 @@
 
 import { Product } from "./models/Product";
 import { calculateDiscount } from "./utils/discountCalculator";
+import { fetchAllProducts } from "./services/apiService";
+import { handleUnexpectedError } from "./utils/errorHandler";
 
 async function fetchProducts(): Promise<Product[]> {
   const response = await fetch("https://dummyjson.com/products");
@@ -61,3 +63,19 @@ console.log(` Discount amount: $${discountAmount.toFixed(2)}`);
 
 const finalPrice = mascara.getPriceWithDiscount();
 console.log(`Final Price: $${finalPrice.toFixed(2)}`);
+
+async function main() {
+  try {
+    const products = await fetchAllProducts();
+
+    //This section displays details of the first product
+    products[0].displayDetails();
+
+    const discounted = products[0].getPriceWithDiscount();
+    console.log(` Discounted Price: $${discounted.toFixed(2)}`);
+  } catch (error) {
+    handleUnexpectedError(error);
+  }
+}
+
+main();
