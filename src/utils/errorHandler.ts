@@ -19,3 +19,20 @@ export function handleNetworkError(error: any): void {
     alert("Connection to Network failed. Please Check your internet connection.");
 }
 
+// This section will handle the API errors
+export function handleApiError(statusCode: number, message: string): void {
+  console.error(`API Error [${statusCode}]: ${message}`);
+
+  switch (statusCode) {
+    case 404:
+      alert("The requested resource was not found.");
+      break;
+    case 500:
+      alert("Server error. Please try again later.");
+      break;
+    default:
+      alert("An unexpected error occurred while fetching data.");
+      break;
+  }
+}
+
